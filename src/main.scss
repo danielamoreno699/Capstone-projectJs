@@ -1,0 +1,16 @@
+$background-color: #86D3E2;
+$purple-color: #7f389f;
+
+body {
+    color: $purple-color;
+    background-color: $background-color;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        width: 20%;
+        height: auto;
+    }
+}
