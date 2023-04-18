@@ -4,54 +4,75 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webpack Boilerplate</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700&display=swap');
+  </style>
+  <title>PopcornPulse</title>
 </head>
 <body>
- 
-   <!-- Button trigger modal -->
- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="submitMovie">
-  Launch static backdrop modal
-</button>
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered  modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      
-        
-
-      </div>
-      <div class="modal-body" id="modal-body">
-         
-      </div>
-      <h4 class="text-center">comments <span id="counter-coments"> (4)</span></h4>
-      <div class="container" id="comment-container">
-    
-
-      </div>
-      <div class="container container-form">
-      <h4 class="text-center">Add a comment</h4>
-      <form class="form mt-3" action="/" method="post" id="submit" >
-         
-          <div class="mb-2">
-            
-            <input type="text" class="form-control" id="name" placeholder="Add your name">
-          </div>
-          <div class="mb-2">
-           
-            <textarea class="form-control mt-2 " id="text" placeholder="insights"></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary">comment</button>
-        </form>
+  <header>
+    <nav>
+        <img src="./assets/logo-no-background.svg" alt="logo" id="h-logo">
+        <ul>
+            <li>Most Trendy (6)</li>
+            <li>Best Rated</li>
+            <li>Most Viewed</li>
+        </ul>  
+    </nav>
+</header>
+<main>
+    <div class="w-75 mx-auto">
+        <div class="section-title">
+            <h2>Most Trendy Movies:</h2>
+        </div>
+        <div class="row .movies-grid" id="moviesContainer">
+        </div>
+    </div>
+    <template id="movieCardTemplate">
+        <div class="movie-card col-sm-4">
+            <div class="movie-img">
+              <img src="./assets/65.jpg" alt="movie cover">
+            </div>
+            <div class="m-heading">
+                <h4>Adam Driver 65</h4>
+                <span> ♡ Like</span>
+            </div>
+            <div class="m-details">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="submitMovie">See Comments</button>
+            </div>
+            <span class="movieID" id="23232"></span>
+        </div>
+    </template>
+</main>
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered  modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modal-body">
+        </div>
+        <h4 class="text-center">comments <span id="counter-coments"> (4)</span></h4>
+        <div class="container" id="comment-container">
+        </div>
+        <div class="container container-form">
+        <h4 class="text-center">Add a comment</h4>
+        <form class="form mt-3" action="/" method="post" id="submit" >
+            <div class="mb-2">
+              <input type="text" class="form-control" id="name" placeholder="Add your name">
+            </div>
+            <div class="mb-2">
+              <textarea class="form-control mt-2 " id="text" placeholder="insights"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">comment</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
-  
-  
+<footer>
+    <p>Created by Daniela Moreno and Cristian Zambrano under the CC License</p>
+</footer>  
 </body>
 </html>
