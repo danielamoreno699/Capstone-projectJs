@@ -25,32 +25,12 @@
         <div class="section-title">
             <h2>Most Trendy Movies:</h2>
         </div>
-        <div class="movies-grid">
-            <div class="movie-card">
-                <div class="movie-img">
-                  <img src="./assets/65.jpg" alt="movie cover">
-                </div>
-                <div class="m-heading">
-                    <h4>Adam Driver 65</h4>
-                    <span> ♡ Like</span>
-                </div>
-                <div class="m-details">
-                    <button>See Comments</button>
-                </div>
-            </div>
-            <div class="movie-card">
-              <div class="movie-img">
-                <img src="./assets/65.jpg" alt="movie cover">
-              </div>
-              <div class="m-heading">
-                  <h4>Adam Driver 65</h4>
-                  <span> ♡ Like</span>
-              </div>
-              <div class="m-details">
-                  <button>See Comments</button>
-              </div>
-          </div>
-          <div class="movie-card">
+        <div class="row .movies-grid" id="moviesContainer">
+
+        </div>
+    </div>
+    <template id="movieCardTemplate">
+        <div class="movie-card col-sm-4">
             <div class="movie-img">
               <img src="./assets/65.jpg" alt="movie cover">
             </div>
@@ -62,8 +42,7 @@
                 <button>See Comments</button>
             </div>
         </div>
-        </div>
-    </div>
+    </template>
 </main>
 </body>
 </html>
