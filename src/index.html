@@ -9,9 +9,11 @@
 <body>
  
    <!-- Button trigger modal -->
- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+ <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="submitMovie">
   Launch static backdrop modal
 </button>
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -23,31 +25,11 @@
         
 
       </div>
-      <div class="modal-body">
-          <img class="img-modal " src="./assets/scarymovie.jpg" alt="">
-          <div class="container mt-4">
-              <h2 class="text-center">The Last Kingdom: Seven Kings Must Die</h2>
-              <div class="row justify-content-center mt-3">
-                <div class="col-md-4 mt-3 align-items-center ">
-                  <p> <span class="stroke"> Popularity: </span> 161.147</p>
-                  <p> <span class="stroke"> Release Date: </span> 2023-04-14</p>
-                  <p> <span class="stroke"> Overview: </span>In the wake of King Edward's death, Uhtred of Bebbanburg and his comrades adventure across a fractured kingdom in the hopes of uniting England at last.</p>
-                </div>
-                <div class="col-md-4 mt-3 align-items-center">
-                 
-                  <p> <span class="stroke"> Type: </span> Movie</p>
-                  <p> <span class="stroke"> Vote Average: </span> 7.75</p>
-                  <p> <span class="stroke"> Vote Count: </span> 140</p>
-                </div>
-              </div>
-            </div>
-            
-      
-      <h4 class="text-center">comments <span> (4)</span></h4>
-      <div class="container" id="comment-container">
-          
-
+      <div class="modal-body" id="modal-body">
+         
       </div>
+      <h4 class="text-center">comments <span id="counter-coments"> (4)</span></h4>
+      <div class="container" id="comment-container">
     
 
       </div>
