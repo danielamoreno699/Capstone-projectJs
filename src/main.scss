@@ -1,16 +1,26 @@
-$background-color: #86D3E2;
-$purple-color: #7f389f;
+@import "~bootstrap/scss/bootstrap";
 
-body {
-    color: $purple-color;
-    background-color: $background-color;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.img-modal{
+    width:100%;
+    height: 70vh;
+}
 
-    img {
-        width: 20%;
-        height: auto;
-    }
+.modal-footer{
+    display:block
+}
+
+.stroke{
+    font-size: 1.1rem;
+    margin: 0;
+    -webkit-text-stroke: 1px rgb(5, 3, 3);
+}
+
+.container-form{
+    width: 30rem;
+    height: 14rem;
+
+}
+
+.auto{
+    height: auto;
 }
