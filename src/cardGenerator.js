@@ -1,5 +1,12 @@
+import { displayComment, handleSubmit, triggerMovieID} from "./popup.js";
+
 const templateMovieCard = document.getElementById('movieCardTemplate');
 const moviesContainer = document.getElementById('moviesContainer');
+const form = document.getElementById('submit');
+
+export const activateSubmit = () => {
+    form.addEventListener('submit', handleSubmit);
+}
 
 const generateCard = (data) => {
     for (let i = 0; i < 6; i += 1) {
@@ -18,6 +25,9 @@ const generateCard = (data) => {
     const posterPath = movieInfo.poster_path;
     const cleanPosterPath = baseImgPath + posterPath;
     movieCard.querySelector('img').src = cleanPosterPath;
+    movieCard.querySelector('button').addEventListener('click', function() {
+        triggerMovieID(movieInfo, cleanPosterPath);
+    });
 
     // Insert the project card into the projects container
     moviesContainer.appendChild(movieCard);

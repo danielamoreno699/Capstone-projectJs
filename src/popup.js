@@ -103,16 +103,16 @@ const getListMovie = async () => {
     }
   };
   
-  const populateModal = (movie) => {
+  const populateModal = (movie, cleanPosterPath, movieTitle) => {
     const modalHtml = ` 
-    <img class="img-modal " src= ${movie.poster_path} alt="">
+    <img class="img-modal " src= ${cleanPosterPath} alt="">
     <div class="container mt-4">
-        <h2 class="text-center">${movie.title}</h2>
+        <h2 class="text-center">${movieTitle}</h2>
         <div class="row justify-content-center mt-3">
           <div class="col-md-4 mt-3 align-items-center ">
             <p> <span class="stroke"> Popularity: </span> ${movie.popularity}</p>
             <p> <span class="stroke"> Release Date: </span> ${movie.release_date}</p>
-            <p> <span class="stroke"> Overview: </span>In the wake of King Edward's death, Uhtred of Bebbanburg and his comrades adventure across a fractured kingdom in the hopes of uniting England at last.</p>
+            <p> <span class="stroke"> Overview: </span>${movie.overview}</p>
           </div>
           <div class="col-md-4 mt-3 align-items-center">
            
@@ -128,14 +128,13 @@ const getListMovie = async () => {
   };
 
 // trasnfer data and populate the modal
-export const movieInfo = async(id) => {
-    const movies = await getListMovie()
-    console.log(movies)
-    console.log('clik id')
-    const movie = movies.find((movie) => movie.id === id)
-    if (movie) {
-        populateModal(movie);
-      } else {
-        console.error(`No movie found with id ${id}`);
-      }
+export const triggerMovieID = async(movie, cleanPosterPath) => {
+  if (movie) {
+    if (!movie.title) {
+      populateModal(movie, cleanPosterPath, movie.name);
+    }
+    populateModal(movie, cleanPosterPath, movie.title);
+  } else {
+    console.error(`No movie found with id ${id}`);
+  }
 }
