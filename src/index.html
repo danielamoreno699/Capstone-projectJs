@@ -26,7 +26,6 @@
             <h2>Most Trendy Movies:</h2>
         </div>
         <div class="row .movies-grid" id="moviesContainer">
-
         </div>
     </div>
     <template id="movieCardTemplate">
@@ -39,13 +38,40 @@
                 <span> ♡ Like</span>
             </div>
             <div class="m-details">
-                <button>See Comments</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="submitMovie">See Comments</button>
             </div>
         </div>
     </template>
 </main>
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered  modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modal-body">
+        </div>
+        <h4 class="text-center">comments <span id="counter-coments"> (4)</span></h4>
+        <div class="container" id="comment-container">
+        </div>
+        <div class="container container-form">
+        <h4 class="text-center">Add a comment</h4>
+        <form class="form mt-3" action="/" method="post" id="submit" >
+            <div class="mb-2">
+              <input type="text" class="form-control" id="name" placeholder="Add your name">
+            </div>
+            <div class="mb-2">
+              <textarea class="form-control mt-2 " id="text" placeholder="insights"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">comment</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 <footer>
     <p>Created by Daniela Moreno and Cristian Zambrano under the CC License</p>
-</footer>
+</footer>  
 </body>
 </html>

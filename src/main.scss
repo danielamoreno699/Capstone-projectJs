@@ -11,6 +11,25 @@ html {
     }
 }
 
+.img-modal{
+    width:100%;
+    height: 70vh;
+}
+
+.modal-footer{
+    display:block
+}
+
+.stroke{
+    font-size: 1.1rem;
+    margin: 0;
+    -webkit-text-stroke: 1px rgb(5, 3, 3);
+}
+
+.container-form{
+    width: 30rem;
+    height: 14rem;
+
 body {
     background-color: $purple-color;
     color: white;
