@@ -1,131 +1,106 @@
+let movieId = '';
 
-export let movieId ;
+// posting comments calling the interactive API
 
+export const postComment = async (data) => {
+  // console.log(data);
 
-export const postComment = async(data) => {
-    console.log(data)
-    
-    try {
-        console.log('clicked')
-        const res = await fetch('https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/KoCOE5oCIzRMqu6L9zdv/comments', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-          });
-          const responseData = await res.json();
-          return responseData
-        
-    } catch (error) {
-        return error
+  try {
+    // console.log('clicked');
+    const res = await fetch('https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/KoCOE5oCIzRMqu6L9zdv/comments', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    const responseData = await res.json();
+    return responseData;
+  } catch (error) {
+    return error;
+  }
+};
+
+// get comments from api
+const getListcomments = async (movieId) => {
+  try {
+    // console.log('movieId:', movieId);
+    const res = await fetch(`https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/KoCOE5oCIzRMqu6L9zdv/comments/?item_id=${movieId}`, {
+      method: 'GET',
+    });
+
+    const responseData = await res.json();
+    // console.log('response', responseData);
+    return responseData;
+  } catch (error) {
+    return error;
+  }
+};
+
+const displayComment = async () => {
+  const span = document.getElementById('counter-coments');
+  const commentsContainer = document.getElementById('comment-container');
+  commentsContainer.innerHTML = '';
+
+  try {
+    const comments = await getListcomments(movieId);
+    const counts = comments.length;
+    // console.log('comments', comments);
+    // console.log('counts', counts);
+
+    if (comments.length === 0) {
+      commentsContainer.innerHTML = 'No comments yet.';
+      return;
     }
-   
-}
 
-export const handleSubmit = async(e) => {
-   
-    
-    e.preventDefault();
-  
-    const userName = document.getElementById('name')
-    const txt = document.getElementById('text')
-  
-    if(!userName.value || !txt.value){
-      return
-    }
-  
-    
-    console.log('222', movieId)
+    span.innerText = `(${counts})`;
 
-    const commentData = { item_id: movieId, username: userName.value, comment: txt.value };
-
-
-      try {
-        await postComment(commentData);
-        userName.value = '';
-        txt.value = '';
-        displayComment();
-      } catch (error) {
-        console.error(error);
-      }
-  };
-
-
-// get comments 
-const getListcomments = async(movieId) => {
-    try {
-        console.log('movieId:', movieId);
-        const res = await fetch(`https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/KoCOE5oCIzRMqu6L9zdv/comments/?item_id=${movieId}`, {
-            method: 'GET',
-        });
-
-        const responseData = await res.json();
-        console.log('response', responseData)
-        return responseData        
-    } catch (error) {
-        return error
-    }
-}
-
-const displayComment = async() => {
-    const span = document.getElementById('counter-coments')
-    const commentsContainer = document.getElementById("comment-container")
-    commentsContainer.innerHTML = '';
-  
-    try {
-      const comments = await getListcomments(movieId);
-      const counts = comments.length
-      console.log('comments', comments);
-      console.log('counts', counts)
-     
-  
-      if (comments.length === 0) {
-        commentsContainer.innerHTML = 'No comments yet.';
-        return;
-      }
-
-      span.innerText = `(${counts})`
-  
-      comments.forEach(result => {
-        const row = document.createElement('div');
-        row.classList.add('row');
-        const rowContent = `
+    comments.forEach((result) => {
+      const row = document.createElement('div');
+      row.classList.add('row');
+      const rowContent = `
         <div class="col ">
         ${result.creation_date} - ${result.username} : ${result.comment}
         </div>
         `;
-        row.innerHTML = rowContent
-        commentsContainer.appendChild(row) 
-      });
+      row.innerHTML = rowContent;
+      commentsContainer.appendChild(row);
+    });
+  } catch (error) {
+    // console.error(error);
+    commentsContainer.innerHTML = 'Failed to load comments.';
+  }
+};
 
-      
-    } catch (error) {
-      console.error(error);
-      commentsContainer.innerHTML = 'Failed to load comments.';
-    }
-  };
-  
-  //displayComment()
+// handle submit of form btn for comments
+export const handleSubmit = async (e) => {
+  e.preventDefault();
 
+  const userName = document.getElementById('name');
+  const txt = document.getElementById('text');
 
-console.log('constmovie', movieId)
+  if (!userName.value || !txt.value) {
+    return;
+  }
 
+  // console.log('222', movieId);
 
-// trasnfer data and populate the modal
-export const triggerMovieID = async(movie, cleanPosterPath) => {
-  
-    movieId = movie.id;
-    console.log('33', movieId)
-    populateModal(movie, cleanPosterPath);
-  
-    displayComment(movieId);
-    
-    return movieId;
-  };
+  const commentData = { item_id: movieId, username: userName.value, comment: txt.value };
 
-  const populateModal = (movie, cleanPosterPath) => {
-    const modalHtml = ` 
+  try {
+    await postComment(commentData);
+    userName.value = '';
+    txt.value = '';
+    displayComment();
+  } catch (error) {
+    // console.error(error);
+  }
+};
+
+// populate modal with data from API
+
+const populateModal = (movie, cleanPosterPath) => {
+  const modalHtml = ` 
     <img class="img-modal " src= ${cleanPosterPath} alt="">
     <div class="container mt-4">
         <h2 class="text-center" id="modal-title">${movie.title || movie.name}</h2>
@@ -142,11 +117,19 @@ export const triggerMovieID = async(movie, cleanPosterPath) => {
             <p> <span class="stroke"> Vote Count: </span> ${movie.vote_count}</p>
           </div>
         </div>
-      </div>`
+      </div>`;
 
-      const modalEl = document.getElementById('modal-body')
-      modalEl.innerHTML = modalHtml
-  };
- 
+  const modalEl = document.getElementById('modal-body');
+  modalEl.innerHTML = modalHtml;
+};
 
+// trasnfer data and populate the modal
+export const triggerMovieID = async (movie, cleanPosterPath) => {
+  movieId = movie.id;
+  // console.log('33', movieId);
+  populateModal(movie, cleanPosterPath);
 
+  displayComment(movieId);
+
+  return movieId;
+};
