@@ -1,149 +1,151 @@
 @import "~bootstrap/scss/bootstrap";
-$red-color: #FF4057;
+$red-color: #ff4057;
 $purple-color: #282634;
 
 html {
-    font-size: 62.5%;
-    font-family: 'Nunito Sans', sans-serif;
+  font-size: 62.5%;
+  font-family: 'Nunito Sans', sans-serif;
 
-    a {
-      cursor: pointer;
-    }
+  a {
+    cursor: pointer;
+  }
 }
 
-.img-modal{
-    width:100%;
-    height: 70vh;
+.img-modal {
+  width: 100%;
+  height: 70vh;
 }
 
-.modal-footer{
-    display:block
+.modal-footer {
+  display: block;
 }
 
 .modal-dialog {
-    color: $purple-color;
+  color: $purple-color;
 }
 
-.stroke{
-    font-size: 1.1rem;
-    margin: 0;
-    -webkit-text-stroke: 1px rgb(5, 3, 3);
+.stroke {
+  font-size: 1.1rem;
+  margin: 0;
+  -webkit-text-stroke: 1px rgb(5, 3, 3);
 }
 
-.container-form{
-    width: 30rem;
-    height: 14rem;
+.container-form {
+  width: 30rem;
+  height: 14rem;
+}
+
+#comment-container {
+  padding: 2rem;
 }
 
 body {
-    background-color: $purple-color;
-    color: white;
+  background-color: $purple-color;
+  color: white;
 }
 
 .main-container {
-    width: 75%;
-    margin: auto;
+  width: 75%;
+  margin: auto;
 }
 
 header {
-    nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 75%;
-        margin: auto;
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 75%;
+    margin: auto;
 
-        #h-logo {
-            width: 20%;
-            height: auto;
-        }
-
-        ul {
-            display: flex;
-
-            li {
-                list-style: none;
-                text-transform: uppercase;
-                font-weight: 600;
-                font-size: 2rem;
-                padding: 1rem 1.5rem;
-            }
-        }
+    #h-logo {
+      width: 20%;
+      height: auto;
     }
+
+    ul {
+      display: flex;
+
+      li {
+        list-style: none;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 2rem;
+        padding: 1rem 1.5rem;
+      }
+    }
+  }
 }
 
 main {
-    padding-top: 15vh;
+  padding-top: 15vh;
 
-    .section-title {
-        padding: 4rem 0;
-        font-size: 1.5rem;
+  .section-title {
+    padding: 4rem 0;
+    font-size: 1.5rem;
+  }
+
+  .row {
+    justify-content: space-between;
+  }
+
+  .movie-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: gray;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 5px 5px rgba($color: #000, $alpha: 0.5);
+    width: 350px;
+    margin: 2.5vh 0;
+
+    .movie-img {
+      height: 40rem;
+      width: 100%;
+      background-color: white;
+      overflow: hidden;
+      position: relative;
+      border-radius: 0.5rem;
+      box-shadow: 0 5px 5px rgba($color: #000, $alpha: 0.3);
+
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.2s ease-out;
+      }
+
+      img:hover {
+        transform: scale(1.1);
+      }
     }
 
-    .row {
-        justify-content: space-between;
+    .m-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      font-size: 1.7rem;
+      margin: 1.5rem 0;
 
+      h4 {
+        width: 50%;
+      }
     }
 
-    .movie-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: gray;
-        padding: 1.5rem;
-        border-radius: 0.5rem;
-        box-shadow: 0px 5px 5px rgba($color: #000000, $alpha: 0.5);
-        width: 350px;
-        margin: 2.5vh 0;
-
-        .movie-img {
-            height: 40rem;
-            width: 100%;
-            background-color: white;
-            overflow: hidden;
-            position: relative;
-            border-radius: 0.5rem;
-            box-shadow: 0px 5px 5px rgba($color: #000000, $alpha: 0.3);
-
-
-            img {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                transition: transform 0.2s ease-out;
-            }
-
-            img:hover {
-                transform: scale(1.1);
-            }
-        }
-
-        .m-heading {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            font-size: 1.7rem;
-            margin: 1.5rem 0;
-
-            h4 {
-                width: 50%;
-            }
-        }
-
-        button {
-            color: white;
-            background-color: $red-color;
-            padding: 1rem 1.5rem;
-            border: solid 0.2rem $purple-color;
-        }
+    button {
+      color: white;
+      background-color: $red-color;
+      padding: 1rem 1.5rem;
+      border: solid 0.2rem $purple-color;
     }
+  }
 }
 
 footer {
-    max-width: 75%;
-    margin: auto;
+  max-width: 75%;
+  margin: auto;
 }

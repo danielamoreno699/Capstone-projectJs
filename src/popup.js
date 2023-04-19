@@ -1,113 +1,109 @@
-const urlPost = "https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps"
-const id = "KoCOE5oCIzRMqu6L9zdv"
-const urlGet = "https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/KoCOE5oCIzRMqu6L9zdv/comments/?item_id=item1"
-const item_id = 'item2'
-const apiKey = '65ce0d679d0529fede22e13b61a1c2c0';
+let movieId = '';
 
-  
+// posting comments calling the interactive API
 
-export const displayComment = async() => {
-   
-    try {
-        const data = await getListcomments(id);
-        
+export const postComment = async (data) => {
+  // console.log(data);
 
-        const container = document.getElementById("comment-container")
-        container.innerHTML = ''
+  try {
+    // console.log('clicked');
+    const res = await fetch('https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/KoCOE5oCIzRMqu6L9zdv/comments', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    const responseData = await res.json();
+    return responseData;
+  } catch (error) {
+    return error;
+  }
+};
 
-        data.forEach((result) => {
-            const row = document.createElement('div')
-            row.classList.add('row')
-            const rowContent = `
-            <div class="col ">
-                    ${result.creation_date} - ${result.username} : ${result.comment}
-             </div>
-            `
-            row.innerHTML = rowContent
-            container.appendChild(row) 
-        })
+// get comments from api
+const getListcomments = async (movieId) => {
+  try {
+    // console.log('movieId:', movieId);
+    const res = await fetch(`https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/KoCOE5oCIzRMqu6L9zdv/comments/?item_id=${movieId}`, {
+      method: 'GET',
+    });
 
-    } catch (error) {
-        return error
-        
+    const responseData = await res.json();
+    // console.log('response', responseData);
+    return responseData;
+  } catch (error) {
+    return error;
+  }
+};
+
+const displayComment = async () => {
+  const span = document.getElementById('counter-coments');
+  const commentsContainer = document.getElementById('comment-container');
+  commentsContainer.innerHTML = '';
+
+  try {
+    const comments = await getListcomments(movieId);
+    const counts = comments.length;
+    // console.log('comments', comments);
+    // console.log('counts', counts);
+
+    if (comments.length === 0) {
+      commentsContainer.innerHTML = 'No comments yet.';
+      return;
     }
 
-}
+    span.innerText = `(${counts})`;
 
-export const postComment = async(data) => {
-    
-    try {
-        console.log('clicked')
-        const res = await fetch('https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/KoCOE5oCIzRMqu6L9zdv/comments', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-          });
-          const responseData = await res.json();
-          return responseData
-        
-    } catch (error) {
-        return error
-    }
-   
-}
+    comments.forEach((result) => {
+      const row = document.createElement('div');
+      row.classList.add('row');
+      const rowContent = `
+        <div class="col ">
+        ${result.creation_date} - ${result.username} : ${result.comment}
+        </div>
+        `;
+      row.innerHTML = rowContent;
+      commentsContainer.appendChild(row);
+    });
+  } catch (error) {
+    // console.error(error);
+    commentsContainer.innerHTML = 'Failed to load comments.';
+  }
+};
 
-export const handleSubmit = (e) => {
-    e.preventDefault();
-  
-    const userName = document.getElementById('name')
-    const txt = document.getElementById('text')
-  
-    if(!userName.value || !txt.value){
-      return
-    }
-  
-    postComment({item_id: item_id, username: userName.value, comment: txt.value})
-      .then(() => {
-        userName.value = ''
-        txt.value = ''
-        displayComment()
-      })
-      .catch((error) => console.error(error))
-  };
-  
+// handle submit of form btn for comments
+export const handleSubmit = async (e) => {
+  e.preventDefault();
 
+  const userName = document.getElementById('name');
+  const txt = document.getElementById('text');
 
-// get comments 
-const getListcomments = async(id) => {
-    try {
-        const res = await fetch(`https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/KoCOE5oCIzRMqu6L9zdv/comments/?item_id=item2`, {
-            method: 'GET',
-        });
+  if (!userName.value || !txt.value) {
+    return;
+  }
 
-        const responseData = await res.json();
-        return responseData
-        
-        
-    } catch (error) {
-        return error
-        
-    }
+  // console.log('222', movieId);
 
-} 
+  const commentData = { item_id: movieId, username: userName.value, comment: txt.value };
 
-const getListMovie = async () => {
-    try {
-      const res = await fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${apiKey}`);
-      const data = await res.json();
-      return data.results;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  
-  const populateModal = (movie, cleanPosterPath, movieTitle) => {
-    const modalHtml = ` 
+  try {
+    await postComment(commentData);
+    userName.value = '';
+    txt.value = '';
+    displayComment();
+  } catch (error) {
+    // console.error(error);
+  }
+};
+
+// populate modal with data from API
+
+const populateModal = (movie, cleanPosterPath) => {
+  const modalHtml = ` 
     <img class="img-modal " src= ${cleanPosterPath} alt="">
     <div class="container mt-4">
-        <h2 class="text-center">${movieTitle}</h2>
+        <h2 class="text-center" id="modal-title">${movie.title || movie.name}</h2>
         <div class="row justify-content-center mt-3">
           <div class="col-md-4 mt-3 align-items-center ">
             <p> <span class="stroke"> Popularity: </span> ${movie.popularity}</p>
@@ -121,20 +117,19 @@ const getListMovie = async () => {
             <p> <span class="stroke"> Vote Count: </span> ${movie.vote_count}</p>
           </div>
         </div>
-      </div>`
+      </div>`;
 
-      const modalEl = document.getElementById('modal-body')
-      modalEl.innerHTML = modalHtml
-  };
+  const modalEl = document.getElementById('modal-body');
+  modalEl.innerHTML = modalHtml;
+};
 
 // trasnfer data and populate the modal
-export const triggerMovieID = async(movie, cleanPosterPath) => {
-  if (movie) {
-    if (!movie.title) {
-      populateModal(movie, cleanPosterPath, movie.name);
-    }
-    populateModal(movie, cleanPosterPath, movie.title);
-  } else {
-    console.error(`No movie found with id ${id}`);
-  }
-}
+export const triggerMovieID = async (movie, cleanPosterPath) => {
+  movieId = movie.id;
+  // console.log('33', movieId);
+  populateModal(movie, cleanPosterPath);
+
+  displayComment(movieId);
+
+  return movieId;
+};
