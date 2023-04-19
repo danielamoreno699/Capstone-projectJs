@@ -1,40 +1,9 @@
-const urlPost = "https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps"
-const id = "KoCOE5oCIzRMqu6L9zdv"
-const urlGet = "https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/KoCOE5oCIzRMqu6L9zdv/comments/?item_id=item1"
-const item_id = 'item2'
-const apiKey = '65ce0d679d0529fede22e13b61a1c2c0';
 
-  
+export let movieId ;
 
-export const displayComment = async() => {
-   
-    try {
-        const data = await getListcomments(id);
-        
-
-        const container = document.getElementById("comment-container")
-        container.innerHTML = ''
-
-        data.forEach((result) => {
-            const row = document.createElement('div')
-            row.classList.add('row')
-            const rowContent = `
-            <div class="col ">
-                    ${result.creation_date} - ${result.username} : ${result.comment}
-             </div>
-            `
-            row.innerHTML = rowContent
-            container.appendChild(row) 
-        })
-
-    } catch (error) {
-        return error
-        
-    }
-
-}
 
 export const postComment = async(data) => {
+    console.log(data)
     
     try {
         console.log('clicked')
@@ -54,7 +23,9 @@ export const postComment = async(data) => {
    
 }
 
-export const handleSubmit = (e) => {
+export const handleSubmit = async(e) => {
+   
+    
     e.preventDefault();
   
     const userName = document.getElementById('name')
@@ -64,45 +35,101 @@ export const handleSubmit = (e) => {
       return
     }
   
-    postComment({item_id: item_id, username: userName.value, comment: txt.value})
-      .then(() => {
-        userName.value = ''
-        txt.value = ''
-        displayComment()
-      })
-      .catch((error) => console.error(error))
+    
+    console.log('222', movieId)
+
+    const commentData = { item_id: movieId, username: userName.value, comment: txt.value };
+
+
+      try {
+        await postComment(commentData);
+        userName.value = '';
+        txt.value = '';
+        displayComment();
+      } catch (error) {
+        console.error(error);
+      }
   };
-  
 
 
 // get comments 
-const getListcomments = async(id) => {
+const getListcomments = async(movieId) => {
     try {
-        const res = await fetch(`https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/KoCOE5oCIzRMqu6L9zdv/comments/?item_id=item2`, {
+        console.log('movieId:', movieId);
+        const res = await fetch(`https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/KoCOE5oCIzRMqu6L9zdv/comments/?item_id=${movieId}`, {
             method: 'GET',
         });
 
         const responseData = await res.json();
-        return responseData
-        
-        
+        console.log('response', responseData)
+        return responseData        
     } catch (error) {
         return error
-        
     }
+}
 
-} 
-
-const getListMovie = async () => {
+const displayComment = async() => {
+    const span = document.getElementById('counter-coments')
+    const commentsContainer = document.getElementById("comment-container")
+    commentsContainer.innerHTML = '';
+  
     try {
-      const res = await fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${apiKey}`);
-      const data = await res.json();
-      return data.results;
+      const comments = await getListcomments(movieId);
+      const counts = comments.length
+      console.log('comments', comments);
+      console.log('counts', counts)
+     
+  
+      if (comments.length === 0) {
+        commentsContainer.innerHTML = 'No comments yet.';
+        return;
+      }
+
+      span.innerText = `(${counts})`
+  
+      comments.forEach(result => {
+        const row = document.createElement('div');
+        row.classList.add('row');
+        const rowContent = `
+        <div class="col ">
+        ${result.creation_date} - ${result.username} : ${result.comment}
+        </div>
+        `;
+        row.innerHTML = rowContent
+        commentsContainer.appendChild(row) 
+      });
+
+      
     } catch (error) {
       console.error(error);
+      commentsContainer.innerHTML = 'Failed to load comments.';
     }
   };
   
+  //displayComment()
+
+
+console.log('constmovie', movieId)
+
+
+// trasnfer data and populate the modal
+export const triggerMovieID = async(movie, cleanPosterPath) => {
+  
+
+  
+    if (!movie) {
+      return;
+    }
+  
+    movieId = movie.id;
+    console.log('33', movieId)
+    populateModal(movie, cleanPosterPath);
+  
+    displayComment(movieId);
+    
+    return movieId;
+  };
+
   const populateModal = (movie, cleanPosterPath, movieTitle) => {
     const modalHtml = ` 
     <img class="img-modal " src= ${cleanPosterPath} alt="">
@@ -126,15 +153,6 @@ const getListMovie = async () => {
       const modalEl = document.getElementById('modal-body')
       modalEl.innerHTML = modalHtml
   };
+ 
 
-// trasnfer data and populate the modal
-export const triggerMovieID = async(movie, cleanPosterPath) => {
-  if (movie) {
-    if (!movie.title) {
-      populateModal(movie, cleanPosterPath, movie.name);
-    }
-    populateModal(movie, cleanPosterPath, movie.title);
-  } else {
-    console.error(`No movie found with id ${id}`);
-  }
-}
+

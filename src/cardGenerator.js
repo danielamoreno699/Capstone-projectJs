@@ -7,6 +7,7 @@ const form = document.getElementById('submit');
 export const activateSubmit = () => {
     form.addEventListener('submit', handleSubmit);
 }
+  
 
 const generateCard = (data) => {
     for (let i = 0; i < 6; i += 1) {
@@ -40,3 +41,6 @@ export async function getTrendingData() {
     const data = await response.json();
     generateCard(data);
 }
+
+
+
