@@ -115,12 +115,6 @@ console.log('constmovie', movieId)
 // trasnfer data and populate the modal
 export const triggerMovieID = async(movie, cleanPosterPath) => {
   
-
-  
-    if (!movie) {
-      return;
-    }
-  
     movieId = movie.id;
     console.log('33', movieId)
     populateModal(movie, cleanPosterPath);
@@ -130,11 +124,11 @@ export const triggerMovieID = async(movie, cleanPosterPath) => {
     return movieId;
   };
 
-  const populateModal = (movie, cleanPosterPath, movieTitle) => {
+  const populateModal = (movie, cleanPosterPath) => {
     const modalHtml = ` 
     <img class="img-modal " src= ${cleanPosterPath} alt="">
     <div class="container mt-4">
-        <h2 class="text-center">${movieTitle}</h2>
+        <h2 class="text-center" id="modal-title">${movie.title || movie.name}</h2>
         <div class="row justify-content-center mt-3">
           <div class="col-md-4 mt-3 align-items-center ">
             <p> <span class="stroke"> Popularity: </span> ${movie.popularity}</p>
