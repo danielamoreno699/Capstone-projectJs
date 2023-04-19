@@ -9,7 +9,7 @@ export const activateSubmit = () => {
   form.addEventListener('submit', handleSubmit);
 };
 
-const generateCard = (data) => {
+export const generateCard = (data, templateMovieCard, moviesContainer, form) => {
   for (let i = 0; i < 6; i += 1) {
     // Clone the movie card template
     const movieCard = templateMovieCard.content.cloneNode(true);
@@ -45,5 +45,5 @@ export async function getTrendingData() {
   const url = 'https://api.themoviedb.org/3/trending/all/day?api_key=65ce0d679d0529fede22e13b61a1c2c0';
   const response = await fetch(url);
   const data = await response.json();
-  generateCard(data);
+  generateCard(data, templateMovieCard, moviesContainer, form);
 }

@@ -1,4 +1,4 @@
-import { getTrendingData } from '../cardGenerator.js';
+import { generateCard } from '../modals/cardGenerator';
 import { TextEncoder, TextDecoder } from 'text-encoding';
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
@@ -41,20 +41,34 @@ document.body.innerHTML = `
 </main>
 </body>`
 
-const templateMovieCard = document.getElementById('movieCardTemplate');
-const moviesContainer = document.getElementById('moviesContainer');
-const form = document.getElementById('submit');
+describe('generateCard', () => {
+  test('should generate movie cards with correct data and event listeners', async () => {
+    const sampleData = {
+      results: [
+        { id: 1, title: 'Movie 1', poster_path: '/movie1.jpg' },
+        { id: 2, title: 'Movie 2', poster_path: '/movie2.jpg' },
+        { id: 3, title: 'Movie 3', poster_path: '/movie3.jpg' },
+        { id: 4, title: 'Movie 4', poster_path: '/movie4.jpg' },
+        { id: 5, title: 'Movie 5', poster_path: '/movie5.jpg' },
+        { id: 6, title: 'Movie 6', poster_path: '/movie6.jpg' },
+      ],
+    };
 
-describe('getTrendingData', () => {
-    it('fetches data from the TMDB API and generates a card', async () => {
-        const mockResponse = { results: [{ id: 1, title: 'Movie 1' }] };
-        global.fetch = jest.fn(() =>
-          Promise.resolve({
-            json: () => Promise.resolve(mockResponse),
-          })
-        );
-        
-        const trendingData = await getTrendingData();
-        expect(trendingData).toContain(mockResponse.results[0].title);
-      });      
+    const fetchMock = jest.fn().mockResolvedValue({
+      ok: true,
+      json: () => ({ likes: 100 }),
+    });
+
+    Object.defineProperty(global, 'fetch', {
+      value: fetchMock,
+      writable: true,
+    });
+
+    const templateMovieCard = document.getElementById('movieCardTemplate');
+    const moviesContainer = document.getElementById('moviesContainer');
+    const form = document.getElementById('submit');
+
+    generateCard(sampleData, templateMovieCard, moviesContainer, form);
+    expect(moviesContainer.children.length).toBe(6);
+  });
 });

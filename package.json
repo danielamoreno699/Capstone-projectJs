@@ -9,6 +9,15 @@
     "build": "webpack --config webpack.prod.js",
     "test": "jest"
   },
+  "jest": {
+    "testEnvironment": "jest-environment-jsdom",
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
+    "moduleNameMapper": {
+      "\\.(css|less|sass|scss)$": "<rootDir>/styleMock.js"
+    }
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
