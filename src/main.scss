@@ -129,6 +129,31 @@ main {
             font-size: 1.7rem;
             margin: 1.5rem 0;
 
+            .likeContainer {
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+
+                a {
+                    color: white;
+                    text-decoration: none;
+                }
+
+                a:hover {
+                    color: $red-color;
+                }
+
+                .likeCount {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    #amountLikes {
+                        margin-right: 0.5rem;
+                    }
+                }
+            }
+
             h4 {
                 width: 50%;
             }
