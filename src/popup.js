@@ -1,12 +1,8 @@
 let movieId = '';
 
 // posting comments calling the interactive API
-
 export const postComment = async (data) => {
-  // console.log(data);
-
   try {
-    // console.log('clicked');
     const res = await fetch('https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/KoCOE5oCIzRMqu6L9zdv/comments', {
       method: 'POST',
       headers: {
@@ -24,13 +20,11 @@ export const postComment = async (data) => {
 // get comments from api
 const getListcomments = async (movieId) => {
   try {
-    // console.log('movieId:', movieId);
     const res = await fetch(`https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/KoCOE5oCIzRMqu6L9zdv/comments/?item_id=${movieId}`, {
       method: 'GET',
     });
 
     const responseData = await res.json();
-    // console.log('response', responseData);
     return responseData;
   } catch (error) {
     return error;
@@ -45,8 +39,6 @@ const displayComment = async () => {
   try {
     const comments = await getListcomments(movieId);
     const counts = comments.length;
-    // console.log('comments', comments);
-    // console.log('counts', counts);
 
     if (comments.length === 0) {
       commentsContainer.innerHTML = 'No comments yet.';
@@ -67,7 +59,6 @@ const displayComment = async () => {
       commentsContainer.appendChild(row);
     });
   } catch (error) {
-    // console.error(error);
     commentsContainer.innerHTML = 'Failed to load comments.';
   }
 };
@@ -83,8 +74,6 @@ export const handleSubmit = async (e) => {
     return;
   }
 
-  // console.log('222', movieId);
-
   const commentData = { item_id: movieId, username: userName.value, comment: txt.value };
 
   try {
@@ -93,12 +82,12 @@ export const handleSubmit = async (e) => {
     txt.value = '';
     displayComment();
   } catch (error) {
-    // console.error(error);
+    // eslint-disable-next-line consistent-return
+    return error;
   }
 };
 
 // populate modal with data from API
-
 const populateModal = (movie, cleanPosterPath) => {
   const modalHtml = ` 
     <img class="img-modal " src= ${cleanPosterPath} alt="">
@@ -126,7 +115,6 @@ const populateModal = (movie, cleanPosterPath) => {
 // trasnfer data and populate the modal
 export const triggerMovieID = async (movie, cleanPosterPath) => {
   movieId = movie.id;
-  // console.log('33', movieId);
   populateModal(movie, cleanPosterPath);
 
   displayComment(movieId);

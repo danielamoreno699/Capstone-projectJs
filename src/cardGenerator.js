@@ -1,4 +1,5 @@
 import { handleSubmit, triggerMovieID } from './popup.js';
+import { likeMovie, getLikeCount } from './likesFunctionality.js';
 
 const templateMovieCard = document.getElementById('movieCardTemplate');
 const moviesContainer = document.getElementById('moviesContainer');
@@ -23,10 +24,17 @@ const generateCard = (data) => {
     const baseImgPath = 'https://image.tmdb.org/t/p/original/';
     const posterPath = movieInfo.poster_path;
     const cleanPosterPath = baseImgPath + posterPath;
+    const likeCountContainer = movieCard.getElementById('amountLikes');
     movieCard.querySelector('img').src = cleanPosterPath;
     movieCard.querySelector('button').addEventListener('click', () => {
       triggerMovieID(movieInfo, cleanPosterPath);
     });
+    const likeButton = movieCard.getElementById('heartButton');
+    likeButton.addEventListener('click', () => {
+      likeMovie(movieInfo.id, likeCountContainer);
+    });
+
+    getLikeCount(movieInfo.id, likeCountContainer);
 
     // Insert the project card into the projects container
     moviesContainer.appendChild(movieCard);
