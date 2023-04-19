@@ -1,8 +1,10 @@
-import { generateCard } from '../modals/cardGenerator';
 import { TextEncoder, TextDecoder } from 'text-encoding';
+import { generateCard } from '../modals/cardGenerator.js';
+
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 const { JSDOM } = require('jsdom');
+
 const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>');
 global.window = dom.window;
 global.document = dom.window.document;
@@ -39,10 +41,10 @@ document.body.innerHTML = `
         </div>
     </template>
 </main>
-</body>`
+</body>`;
 
 describe('generateCard', () => {
-  test('should generate movie cards with correct data and event listeners', async () => {
+  test('should generate correct amount of cards based on input', async () => {
     const sampleData = {
       results: [
         { id: 1, title: 'Movie 1', poster_path: '/movie1.jpg' },
@@ -66,9 +68,8 @@ describe('generateCard', () => {
 
     const templateMovieCard = document.getElementById('movieCardTemplate');
     const moviesContainer = document.getElementById('moviesContainer');
-    const form = document.getElementById('submit');
 
-    generateCard(sampleData, templateMovieCard, moviesContainer, form);
+    generateCard(sampleData, templateMovieCard, moviesContainer);
     expect(moviesContainer.children.length).toBe(6);
   });
 });

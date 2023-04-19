@@ -9,7 +9,7 @@ export const activateSubmit = () => {
   form.addEventListener('submit', handleSubmit);
 };
 
-export const generateCard = (data, templateMovieCard, moviesContainer, form) => {
+export const generateCard = (data, templateMovieCard, moviesContainer) => {
   for (let i = 0; i < 6; i += 1) {
     // Clone the movie card template
     const movieCard = templateMovieCard.content.cloneNode(true);
