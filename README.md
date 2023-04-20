@@ -35,7 +35,7 @@
 
 PopcornPulse is a web app that uses Webpack, Jest, HTML, SCSS, and JavaScript. It fetches data from a movie API and displays the latest trendy movies. Users can 'like' or leave comments on movies, with 'like' and comment counts stored using another API. The app has a modern UI, uses SCSS for styling, and Jest for testing. Webpack bundles and manages dependencies for fast loading. The project offers valuable experience in modern web development techniques.
 
-[🎥 Check out this video of me explaining the key features of the project](https://www.loom.com/share/1a2b5e7e1ce744acb831c75d3ede5c46)
+[🎥 Check out this video of me explaining the key features of the project](https://mega.nz/file/T6B0UDKK#sGkcTmkP2iN5-36AmX7X1eUJa38Olgx0h2M7537y1mg)
 
 ## 🛠 Built With <a name="built-with"></a>
 
