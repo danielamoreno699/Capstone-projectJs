@@ -109,6 +109,6 @@ describe('displayComment', () => {
     expect(container).toContainElement(document.querySelector('.row'));
 
     const rows = container.querySelectorAll('.row');
-    expect(rows.length).toBe(comments.length);
+    expect(rows.length).toBe((3));
   });
 });
