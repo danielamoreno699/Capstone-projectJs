@@ -1,10 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import '@testing-library/jest-dom';
-// import fetchMock from 'jest-fetch-mock';
-// import * as api from './popup.js';
-import {
-  postComment, getListcomments, displayComment, handleSubmit,
-} from './popup.js';
+
+import { postComment, getListcomments, displayComment } from './popup.js';
 
 // Mock fetch function
 global.fetch = jest.fn(() => Promise.resolve({
@@ -92,7 +89,6 @@ describe('displayComment', () => {
   });
 
   it('should render comments with correct content', async () => {
-    // Set up mock data
     const comments = [
       { creation_date: '2022-01-01', username: 'User1', comment: 'Comment1' },
       { creation_date: '2022-01-02', username: 'User2', comment: 'Comment2' },
