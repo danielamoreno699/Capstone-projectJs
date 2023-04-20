@@ -4,13 +4,19 @@ import { likeMovie, getLikeCount } from './likesFunctionality.js';
 const templateMovieCard = document.getElementById('movieCardTemplate');
 const moviesContainer = document.getElementById('moviesContainer');
 const form = document.getElementById('submit');
+const url = 'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/wborijrWBBZrkib7JJmq/likes/';
 
 export const activateSubmit = () => {
   form.addEventListener('submit', handleSubmit);
 };
 
+const updateMenuCounter = (amountTrendy) => {
+  const menuTab = document.getElementById('mCount');
+  menuTab.textContent = "(" + amountTrendy.toString() + ")";
+}
+
 export const generateCard = (data, templateMovieCard, moviesContainer) => {
-  for (let i = 0; i < 6; i += 1) {
+  for (let i = 0; i < data.results.length - 1; i += 1) {
     // Clone the movie card template
     const movieCard = templateMovieCard.content.cloneNode(true);
 
@@ -31,14 +37,17 @@ export const generateCard = (data, templateMovieCard, moviesContainer) => {
     });
     const likeButton = movieCard.getElementById('heartButton');
     likeButton.addEventListener('click', () => {
-      likeMovie(movieInfo.id, likeCountContainer);
+      likeMovie(movieInfo.id, likeCountContainer, url);
     });
 
-    getLikeCount(movieInfo.id, likeCountContainer);
+    getLikeCount(movieInfo.id, likeCountContainer, url);
 
     // Insert the project card into the projects container
     moviesContainer.appendChild(movieCard);
   }
+
+  updateMenuCounter(data.results.length - 1);
+
 };
 
 export async function getTrendingData() {
