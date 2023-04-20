@@ -12,8 +12,8 @@ export const activateSubmit = () => {
 
 const updateMenuCounter = (amountTrendy) => {
   const menuTab = document.getElementById('mCount');
-  menuTab.textContent = "(" + amountTrendy.toString() + ")";
-}
+  menuTab.textContent = `(${amountTrendy.toString()})`;
+};
 
 export const generateCard = (data, templateMovieCard, moviesContainer) => {
   for (let i = 0; i < data.results.length - 1; i += 1) {
@@ -47,7 +47,6 @@ export const generateCard = (data, templateMovieCard, moviesContainer) => {
   }
 
   updateMenuCounter(data.results.length - 1);
-
 };
 
 export async function getTrendingData() {
