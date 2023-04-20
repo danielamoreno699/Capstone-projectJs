@@ -1,6 +1,6 @@
 const url = 'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/wborijrWBBZrkib7JJmq/likes/';
 
-const updateLikes = (likeData, movieID, likeCountContainer) => {
+const updateLikes = (movieID, likeCountContainer, likeData) => {
   let movieLikeData = null;
   let likeAmount = null;
   for (let i = 0; i < likeData.length; i += 1) {
@@ -21,7 +21,7 @@ const updateLikes = (likeData, movieID, likeCountContainer) => {
 export async function getLikeCount(id, likeCountContainer) {
   const response = await fetch(url);
   const data = await response.json();
-  updateLikes(data, id, likeCountContainer);
+  updateLikes(id, likeCountContainer, data);
 }
 
 export const likeMovie = (selectedID, likeCountEmptyContainer) => {

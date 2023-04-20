@@ -1,5 +1,5 @@
 import './main.scss';
-import { getTrendingData, activateSubmit } from './cardGenerator.js';
+import { getTrendingData, activateSubmit } from './modals/cardGenerator.js';
 
 getTrendingData();
 activateSubmit();

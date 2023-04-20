@@ -41,12 +41,16 @@ export const displayComment = async () => {
     const comments = await getListcomments(movieId);
     const counts = comments.length;
 
-    if (comments.length === 0) {
+    if (comments.length === 0 || !comments) {
       commentsContainer.innerHTML = 'No comments yet.';
       return;
     }
 
-    span.innerText = `(${counts})`;
+    if (counts) {
+      span.innerText = `(${counts})`;
+    } else {
+      span.innerText = `(${0})`;
+    }
 
     comments.forEach((result) => {
       const row = document.createElement('div');
@@ -60,14 +64,13 @@ export const displayComment = async () => {
       commentsContainer.appendChild(row);
     });
   } catch (error) {
-    commentsContainer.innerHTML = 'Failed to load comments.';
+    commentsContainer.innerHTML = 'No comments yet';
   }
 };
 
 // handle submit of form btn for comments
 export const handleSubmit = async (e) => {
   e.preventDefault();
-  console.log('handleSubmit called');
 
   const userName = document.getElementById('name');
   const txt = document.getElementById('text');

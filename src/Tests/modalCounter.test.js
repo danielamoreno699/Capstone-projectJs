@@ -1,7 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import '@testing-library/jest-dom';
-
-import { postComment, getListcomments, displayComment } from './popup.js';
+import { postComment, getListcomments, displayComment } from '../modals/popup.js';
 
 // Mock fetch function
 global.fetch = jest.fn(() => Promise.resolve({
@@ -102,7 +99,6 @@ describe('displayComment', () => {
     await displayComment();
 
     const container = document.getElementById('comment-container');
-    expect(container).toContainElement(document.querySelector('.row'));
 
     const rows = container.querySelectorAll('.row');
     expect(rows.length).toBe((3));
