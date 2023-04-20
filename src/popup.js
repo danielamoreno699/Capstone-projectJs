@@ -11,6 +11,7 @@ export const postComment = async (data) => {
       body: JSON.stringify(data),
     });
     const responseData = await res.json();
+
     return responseData;
   } catch (error) {
     return error;
@@ -18,7 +19,7 @@ export const postComment = async (data) => {
 };
 
 // get comments from api
-const getListcomments = async (movieId) => {
+export const getListcomments = async (movieId) => {
   try {
     const res = await fetch(`https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/KoCOE5oCIzRMqu6L9zdv/comments/?item_id=${movieId}`, {
       method: 'GET',
@@ -31,7 +32,7 @@ const getListcomments = async (movieId) => {
   }
 };
 
-const displayComment = async () => {
+export const displayComment = async () => {
   const span = document.getElementById('counter-coments');
   const commentsContainer = document.getElementById('comment-container');
   commentsContainer.innerHTML = '';
@@ -66,6 +67,7 @@ const displayComment = async () => {
 // handle submit of form btn for comments
 export const handleSubmit = async (e) => {
   e.preventDefault();
+  console.log('handleSubmit called');
 
   const userName = document.getElementById('name');
   const txt = document.getElementById('text');
@@ -78,6 +80,7 @@ export const handleSubmit = async (e) => {
 
   try {
     await postComment(commentData);
+
     userName.value = '';
     txt.value = '';
     displayComment();
@@ -88,7 +91,7 @@ export const handleSubmit = async (e) => {
 };
 
 // populate modal with data from API
-const populateModal = (movie, cleanPosterPath) => {
+export const populateModal = (movie, cleanPosterPath) => {
   const modalHtml = ` 
     <img class="img-modal " src= ${cleanPosterPath} alt="">
     <div class="container mt-4">
