@@ -104,3 +104,62 @@ describe('displayComment', () => {
     expect(rows.length).toBe((3));
   });
 });
+
+
+
+import { handleSubmit } from './form';
+
+// mock the postComment function
+jest.mock('../modals/popup.js', () => ({
+  postComment: jest.fn(),
+}));
+
+describe('handleSubmit', () => {
+  beforeEach(() => {
+    // reset the mock implementation before each test
+    postComment.mockReset();
+  });
+
+  it('should call postComment with the correct comment data', async () => {
+    // create a mock event object
+    const mockEvent = {
+      preventDefault: jest.fn(),
+      target: {
+        elements: {
+          name: { value: 'John' },
+          text: { value: 'Hello World!' },
+        },
+      },
+    };
+
+    // call the handleSubmit function with the mock event object
+    await handleSubmit(mockEvent);
+
+    // check that the postComment function was called with the correct data
+    expect(postComment).toHaveBeenCalledTimes(1);
+    expect(postComment).toHaveBeenCalledWith({
+     
+      username: 'John',
+      comment: 'Hello World!',
+    });
+  });
+
+  it('should not call postComment if the form is invalid', async () => {
+    // create a mock event object with empty name and text fields
+    const mockEvent = {
+      preventDefault: jest.fn(),
+      target: {
+        elements: {
+          name: { value: '' },
+          text: { value: '' },
+        },
+      },
+    };
+
+    // call the handleSubmit function with the mock event object
+    await handleSubmit(mockEvent);
+
+    // check that the postComment function was not called
+    expect(postComment).not.toHaveBeenCalled();
+  });
+});
