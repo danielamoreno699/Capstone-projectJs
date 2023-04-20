@@ -46,15 +46,11 @@ export const displayComment = async () => {
       return;
     }
 
-    if (counts)
-    {
+    if (counts) {
       span.innerText = `(${counts})`;
-    }
-    else
-    {
+    } else {
       span.innerText = `(${0})`;
     }
-    
 
     comments.forEach((result) => {
       const row = document.createElement('div');
@@ -75,7 +71,6 @@ export const displayComment = async () => {
 // handle submit of form btn for comments
 export const handleSubmit = async (e) => {
   e.preventDefault();
-  console.log('handleSubmit called');
 
   const userName = document.getElementById('name');
   const txt = document.getElementById('text');
